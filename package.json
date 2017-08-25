@@ -1,0 +1,37 @@
+{
+  "name": "acme-cart-cp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start:dev": "nodemon -e html,js,css server.js",
+    "build:css": "node-sass -w -r css/scss -o css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rivermanvr/acme-cart-cp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rivermanvr/acme-cart-cp/issues"
+  },
+  "homepage": "https://github.com/rivermanvr/acme-cart-cp#readme",
+  "devDependencies": {
+    "node-sass": "^4.5.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.7",
+    "express": "^4.15.4",
+    "http": "0.0.0",
+    "jquery": "^3.2.1",
+    "method-override": "^2.3.9",
+    "morgan": "^1.8.2",
+    "path": "^0.12.7",
+    "pg": "^7.2.0",
+    "sequelize": "^4.7.5",
+    "swig": "^1.4.2"
+  }
+}
