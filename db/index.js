@@ -4,7 +4,9 @@ const sync = () => db.sync({ force: true });
 
 const seed = () => {
   return sync()
-    .then(() => {}
+    .then(() => {
+      //seeding will be here....
+    }
   )
 };
 

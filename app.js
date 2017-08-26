@@ -31,19 +31,14 @@ app.use(methodOverride('_method'));
 //     res.locals.hotels = hotels;
 //     res.locals.activities = activities;
 //     res.locals.restaurants = restaurants;
-//     res.locals.GOOGLE_API_KEY = config.GOOGLE_API_KEY;
 //     return next();
 //   })
 // });
 
-// app.use('/xxxxxx', routes);
-
-// app.get('/', (req, res, next) => {
-//   res.render('index', { nav: 'home' });
-// })
+app.use('/xxxxxx', routes);
 
 app.get('/', (req, res, next) => {
-  res.send('Hello');
+  res.render('index', { nav: 'home' });
 })
 
 // ......our error middleware.......
