@@ -11,13 +11,36 @@ swig.setDefaults({ cache: false });
 app.set('view engine', 'html');
 app.engine('html', swig.renderFile);
 
+app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/source', express.static(path.join(__dirname, 'js')));
+app.use('/vendor/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap')));
+app.use('/vendor/jquery', express.static(path.join(__dirname, 'node_modules/jquery')));
+
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use('/stylesheets', express.static(path.join(__dirname, 'css')));
-app.use('/vendor', express.static(path.join(__dirname, 'node_modules')));
+
+// app.use('/', (req, res, next) => {
+//   Promise.all([
+//     models.Hotel.findAll(),
+//     models.Activity.findAll(),
+//     models.Restaurant.findAll()
+//   ])
+//   .then(([hotels, activities, restaurants]) => {
+//     res.locals.hotels = hotels;
+//     res.locals.activities = activities;
+//     res.locals.restaurants = restaurants;
+//     res.locals.GOOGLE_API_KEY = config.GOOGLE_API_KEY;
+//     return next();
+//   })
+// });
+
+// app.use('/xxxxxx', routes);
+
+// app.get('/', (req, res, next) => {
+//   res.render('index', { nav: 'home' });
+// })
 
 app.get('/', (req, res, next) => {
   res.send('Hello');
@@ -34,5 +57,5 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   res.status(err.status || 500).render('error', { error: err });
 });
-module.exports = app;
 
+module.exports = app;

@@ -19,7 +19,10 @@
   },
   "homepage": "https://github.com/rivermanvr/acme-cart-cp#readme",
   "devDependencies": {
-    "node-sass": "^4.5.3"
+    "chai": "^4.1.1",
+    "mocha": "^3.5.0",
+    "node-sass": "^4.5.3",
+    "supertest": "^3.0.0"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
