@@ -1,11 +1,95 @@
 {% extends './layout.html' %} 
 {% block content %}
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-8">
       <h3>Products</h3>
-    </div>
-    <div class="col-sm-6">
-        <h3>Your Cart</h3>
+
+      <div class="well backWhite nomarginTopBot">
+        <div>
+          Product 1 name
+          <a href="/1"><button class="btn btn-primary pull-right">Add to Cart</button></a>
+          <br clear="both" />
+        </div>
       </div>
+
+      <div class="well backWhite nomarginTopBot">
+        <div>
+          Product 2 name
+          <a href="/2"><button class="btn btn-primary pull-right">Add to Cart</button></a>
+          <br clear="both" />
+        </div>
+      </div>
+
+        <div class="well backWhite nomarginTopBot">
+          <div>
+            Product 3 name
+            <a href="/3"><button class="btn btn-primary pull-right">Add to Cart</button></a>
+            <br clear="both" />
+          </div>
+        </div>
+
+    </div>
+    <div class="col-sm-4">
+      <div id="cart">
+
+        <h3>Your Cart</h3>
+
+        <div class="well">
+
+          <form action="/" method="POST">
+
+            <div class="well backWhite nomarginTopBot">
+              <div>
+                Product 1 name<span class="label label-default pull-right">1</span>
+                <br clear="both" />
+              </div>
+              <a href="/1"><button class="btn btn-warning margintop">Remove from Cart</button></a>
+            </div>
+
+            <div class="well backWhite nomarginTopBot">
+              <div>
+                Product 2 name<span class="label label-default pull-right">3</span>
+                <br clear="both" />
+              </div>
+              <a href="/2"><button class="btn btn-warning margintop">Remove from Cart</button></a>
+            </div>
+            
+            <hr class="hr" />
+            <div><label for="address">Address:</label></div>
+            <input name="address" type="text" class="marginbelowsm" style="width:100%" />
+            <button class="btn btn-primary" type="submit">Place Order</button>
+
+          </form>
+
+        </div>
+
+      </div>
+
+      <h3>Your Orders</h3>
+      
+        <div class="well backWhite">
+
+          <div class="marginbelowsm">Order: 1 - address</div>
+
+            <div class="well backWhite nomarginTopBot">
+              <div>
+                Product 1 name<span class="label label-default pull-right">1</span>
+                <br clear="both" />
+              </div>
+            </div>
+
+            <div class="well backWhite nomarginTopBot">
+              <div>
+                Product 2 name<span class="label label-default pull-right">3</span>
+                <br clear="both" />
+              </div>
+            </div>
+            
+        </div>
+
+      </div>
+
+    </div>
+
   </div>
 {% endblock %}

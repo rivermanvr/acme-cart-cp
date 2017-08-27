@@ -1,34 +1,42 @@
 .mainnav {
   margin: 20px 0px; }
 
+.nomarginTopBot {
+  margin-top: 0px;
+  margin-bottom: 0px; }
+
+.margintop {
+  margin-top: 10px; }
+
+.marginbelow {
+  margin-bottom: 20px; }
+
+.marginbelowsm {
+  margin-bottom: 10px; }
+
 .moveup {
   margin-top: -35px; }
 
 .moveupsm {
   margin-top: -5px; }
 
+.moveright {
+  margin-left: 20px; }
+
 .moveleft {
   margin-right: 7px; }
-
-.marginbelowsm {
-  margin-bottom: 10px; }
-
-.marginbelow {
-  margin-bottom: 20px; }
 
 .tabtoright {
   margin-left: 25px;
   margin-top: 30px; }
 
-.margintop {
-  margin-top: 10px; }
-
-.moveright {
-  margin-left: 20px; }
-
-hr {
-  display: block;
+.hr {
+  width: 75%;
+  height: 2px;
   margin-left: auto;
   margin-right: auto;
-  border-style: inset;
-  border-width: 1px; }
+  background-color: #dddddd;
+  color: #dddddd; }
+
+.backWhite {
+  background-color: #fff; }
