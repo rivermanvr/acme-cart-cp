@@ -3,9 +3,12 @@ const app = express();
 const path = require( 'path' );
 const swig = require( 'swig' );
 const bodyParser = require( 'body-parser' );
-const routes = require( './routes' );
+const routes = require( './routes/orders' );
 const methodOverride = require( 'method-override' );
 const morgan = require( 'morgan' );
+
+const db = require( './db' );
+const models = db.models;
 
 swig.setDefaults({ cache: false });
 app.set('view engine', 'html');
@@ -21,24 +24,33 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
-// app.use('/', (req, res, next) => {
-//   Promise.all([
-//     models.Hotel.findAll(),
-//     models.Activity.findAll(),
-//     models.Restaurant.findAll()
-//   ])
-//   .then(([hotels, activities, restaurants]) => {
-//     res.locals.hotels = hotels;
-//     res.locals.activities = activities;
-//     res.locals.restaurants = restaurants;
-//     return next();
-//   })
-// });
+app.use('/orders', routes);
 
-app.use('/xxxxxx', routes);
+// .....get the data needed for the main route.....
+
+app.use('/', (req, res, next) => {
+  Promise.all([
+    models.Product.findAll({ order: [['name']] }),
+    models.Order.findOne({
+      where: { isCart: true },
+      include: [{
+        model: models.LineItem
+      }]
+    })
+  ])
+  .then(([products, cart]) => {
+    // console.log('cart: .........', cart)
+    // if (cart) console.log('lineItem: .........', cart.lineitems[0])
+    // console.log('\n', '\n', 'products:..........', products)
+    res.locals.products = products;
+    res.locals.cart = cart;
+    next();
+  })
+  .catch(next);
+});
 
 app.get('/', (req, res, next) => {
-  res.render('index', { nav: 'home' });
+  res.render('index');
 })
 
 // ......our error middleware.......
