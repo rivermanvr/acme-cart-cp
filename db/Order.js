@@ -32,6 +32,17 @@ Order.buildCart = function () {
   })
 }
 
+// .....process cart.....
+
+Order.processCart = function (id, address) {
+  return this.findById(id)
+    .then(order => {
+      order.isCart = false;
+      order.address = address;
+      return order.save();
+    })
+}
+
 //  .....no products left, delete the cart.....
 
 Order.removeCart = function (id) {

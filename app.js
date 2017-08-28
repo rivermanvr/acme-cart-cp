@@ -24,11 +24,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 
-app.use('/orders', routes);
-
 // .....get the data needed for the main route.....
 
-app.use('/', (req, res, next) => {
+app.use((req, res, next) => {
+  console.log('middleware')
   Promise.all([
     models.Product.findAll({ order: [['id']] }),
     models.Order.findOne({
@@ -36,7 +35,15 @@ app.use('/', (req, res, next) => {
     })
   ])
   .then(([products, cart]) => {
-    res.locals.error = false;
+    console.log('Middleware before: ', res.locals.error, res.locals.setError)
+    if (res.locals.setError) {
+      res.locals.error = true;
+      res.locals.setError = false;
+    } else {
+      res.locals.setError = false;
+      res.locals.error = false;
+    }
+    console.log('Middleware after: ', res.locals.error, res.locals.setError)
     res.locals.products = products;
     if (!cart) {
       res.locals.cart = cart;
@@ -50,7 +57,6 @@ app.use('/', (req, res, next) => {
         order: [['productId']]
       })
         .then(lines => {
-          console.log('..........Lines: ', lines)
           res.locals.cart = lines;
           next();
         })
@@ -58,6 +64,8 @@ app.use('/', (req, res, next) => {
   })
   .catch(next);
 });
+
+app.use('/orders', routes);
 
 app.get('/', (req, res, next) => {
   res.render('index');

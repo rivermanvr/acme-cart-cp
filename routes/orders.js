@@ -5,7 +5,7 @@ const models = db.models;
 
 // .....add to &/or create the cart.....
 
-router.post('/:id', (req, res, next) => {
+router.post('/:id/line', (req, res, next) => {
   models.Order.buildCart()
     .then(cart => {
       return models.LineItem.buildLine(req.params.id, cart.id)
@@ -16,10 +16,24 @@ router.post('/:id', (req, res, next) => {
     .catch(next);
 })
 
+// .....make the order.....
+
+router.put('/:id', (req, res, next) => {
+  console.log('............', req.body)
+  if (!req.body.address) {
+    res.render('index', { error: true });
+  } else {
+    models.Order.processCart(req.params.id, req.body.address)
+      .then(() => {
+        res.redirect('/');
+      })
+  }
+})
+
 // .....remove an item from the cart.....
 // .....if no lines left, delete the cart.....
 
-router.delete('/:id/cart/:cartId', (req, res, next) => {
+router.delete('/:cartId/line/:id', (req, res, next) => {
   models.LineItem.removeLine(req.params.id, req.params.cartId)
     .then(() => {
       return models.LineItem.findLines(req.params.cartId)

@@ -5,7 +5,7 @@
       <h3>Products</h3>
       {% for product in products %}
         <div class="well backWhite nomarginTopBot">
-            <form action="/orders/{{ product.id }}" method="POST">
+            <form action="/orders/{{ product.id }}/line" method="POST">
               {{ product.name }}
               <button class="btn btn-primary pull-right" type="submit">Add to Cart</button>
               <br clear="both" />
@@ -20,7 +20,7 @@
           {% if cart %}
             {% for item in cart %}
               <div class="well backWhite">
-                <form action="/orders/{{ item.productId }}/cart/{{ item.orderId }}?_method=DELETE" method="POST">
+                <form action="/orders/{{ item.orderId }}/line/{{ item.productId }}?_method=DELETE" method="POST">
                   <div>
                       <span class="label label-default">{{ item.quantity }}</span><span class="tabtorightsm">{{ item.product.name }}</span>
                     <br clear="both" />
@@ -31,48 +31,39 @@
               </div>
             {% endfor %}
             <hr class="hr" />
-            <form action="/orders/{{ item.productId }}/cart/{{ item.orderId }}" method="POST">
+            <form action="/orders/{{ cart[0].orderId }}?_method=PUT" method="POST">
               <div><label for="address">Address:</label></div>
               {% if error %}
                 <div class="textRed">Please enter an address<div>
               {% endif %}
-              <input name="address" type="text" class="marginbelowsm" style="width:100%" />
+              <input name="address" type="text" class="marginbelowsm textBlk" style="width:100%" />
               <button class="btn btn-primary" type="submit">Place Order</button>
             </form>
           {% else %}
             <h5>Your cart is empty</h5>
           {% endif %}
         </div>
-
-
-
       </div>
-
       <h3>Your Orders</h3>
-      
-        <div class="well backWhite">
+      <div class="well backWhite">
 
-          <div class="marginbelowsm">Order: 1 - address</div>
+        <div class="marginbelowsm">Order: 1 - address</div>
 
-            <div class="well backWhite nomarginTopBot">
-              <div>
-                  <span class="label label-default">{{ item.quantity }}</span><span class="tabtorightsm">{{ item.product.name }}</span>
-                <br clear="both" />
-              </div>
+          <div class="well backWhite nomarginTopBot">
+            <div>
+                <span class="label label-default">{{ item.quantity }}</span><span class="tabtorightsm">{{ item.product.name }}</span>
+              <br clear="both" />
             </div>
+          </div>
 
-            <div class="well backWhite nomarginTopBot">
-              <div>
-                Product 2 name<span class="label label-default pull-right">3</span>
-                <br clear="both" />
-              </div>
+          <div class="well backWhite nomarginTopBot">
+            <div>
+              Product 2 name<span class="label label-default pull-right">3</span>
+              <br clear="both" />
             </div>
-            
-        </div>
-
+          </div>
+          
       </div>
-
     </div>
-
   </div>
 {% endblock %}
