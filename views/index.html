@@ -31,7 +31,7 @@
               </div>
             {% endfor %}
             <hr class="hr" />
-            <form action="/orders/{{ cart[0].orderId }}?_method=PUT" method="POST">
+            <form action="/orders/{{ cartNum }}?_method=PUT" method="POST">
               <div><label for="address">Address:</label></div>
               {% if error %}
                 <div class="textRed">Please enter an address<div>
@@ -45,25 +45,21 @@
         </div>
       </div>
       <h3>Your Orders</h3>
-      <div class="well backWhite">
-
-        <div class="marginbelowsm">Order: 1 - address</div>
-
-          <div class="well backWhite nomarginTopBot">
-            <div>
-                <span class="label label-default">{{ item.quantity }}</span><span class="tabtorightsm">{{ item.product.name }}</span>
-              <br clear="both" />
+      {% if orders %}
+        <div class="well backWhite">
+          {% for order in orders %}
+            <div class="marginbelowsm margintop">Order: {{ order.id }}</div>
+            <div class="well backWhite nomarginTopBot">
+              {% for line in order.lineitems %}
+                <div class="margintop">
+                    <span class="label label-default">{{ line.quantity }}</span><span class="tabtorightsm">{{ line.product.name }}</span>
+                  <br clear="both" />
+                </div>
+              {% endfor %}
             </div>
-          </div>
-
-          <div class="well backWhite nomarginTopBot">
-            <div>
-              Product 2 name<span class="label label-default pull-right">3</span>
-              <br clear="both" />
-            </div>
-          </div>
-          
-      </div>
+          {% endfor %}
+        </div>
+      {% endif %}
     </div>
   </div>
 {% endblock %}

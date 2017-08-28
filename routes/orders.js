@@ -19,7 +19,6 @@ router.post('/:id/line', (req, res, next) => {
 // .....make the order.....
 
 router.put('/:id', (req, res, next) => {
-  console.log('............', req.body)
   if (!req.body.address) {
     res.render('index', { error: true });
   } else {

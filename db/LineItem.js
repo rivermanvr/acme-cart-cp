@@ -17,7 +17,7 @@ const LineItem = db.define('lineitem', defineAttr, defineOptions);
 
 LineItem.buildLine = function (id, cartId) {
   return this.findOne({
-    where: { productId: id }
+    where: { productId: id, orderId: cartId }
   })
     .then(line => {
       if (line) {

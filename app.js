@@ -27,28 +27,30 @@ app.use(methodOverride('_method'));
 // .....get the data needed for the main route.....
 
 app.use((req, res, next) => {
-  console.log('middleware')
+  let cartNum;
   Promise.all([
     models.Product.findAll({ order: [['id']] }),
     models.Order.findOne({
       where: { isCart: true },
+    }),
+    models.Order.findAll({
+      where: { isCart: false },
+      include: [{
+        model: models.LineItem,
+        include: [models.Product]
+      }],
+      order: [['id']]
     })
   ])
-  .then(([products, cart]) => {
-    console.log('Middleware before: ', res.locals.error, res.locals.setError)
-    if (res.locals.setError) {
-      res.locals.error = true;
-      res.locals.setError = false;
-    } else {
-      res.locals.setError = false;
-      res.locals.error = false;
-    }
-    console.log('Middleware after: ', res.locals.error, res.locals.setError)
+  .then(([products, cart, orders]) => {
     res.locals.products = products;
+    res.locals.orders = orders;
     if (!cart) {
       res.locals.cart = cart;
       next();
     } else {
+      cartNum = cart.id;
+      res.locals.cartNum = cartNum;
       return models.LineItem.findAll({
         where: { orderId: cart.id },
         include: [{
@@ -56,10 +58,10 @@ app.use((req, res, next) => {
         }],
         order: [['productId']]
       })
-        .then(lines => {
-          res.locals.cart = lines;
-          next();
-        })
+      .then(lines => {
+        res.locals.cart = lines;
+        next();
+      })
     }
   })
   .catch(next);
