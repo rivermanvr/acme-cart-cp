@@ -30,21 +30,31 @@ app.use('/orders', routes);
 
 app.use('/', (req, res, next) => {
   Promise.all([
-    models.Product.findAll({ order: [['name']] }),
+    models.Product.findAll({ order: [['id']] }),
     models.Order.findOne({
       where: { isCart: true },
-      include: [{
-        model: models.LineItem
-      }]
     })
   ])
   .then(([products, cart]) => {
-    // console.log('cart: .........', cart)
-    // if (cart) console.log('lineItem: .........', cart.lineitems[0])
-    // console.log('\n', '\n', 'products:..........', products)
+    res.locals.error = false;
     res.locals.products = products;
-    res.locals.cart = cart;
-    next();
+    if (!cart) {
+      res.locals.cart = cart;
+      next();
+    } else {
+      return models.LineItem.findAll({
+        where: { orderId: cart.id },
+        include: [{
+          model: models.Product
+        }],
+        order: [['productId']]
+      })
+        .then(lines => {
+          console.log('..........Lines: ', lines)
+          res.locals.cart = lines;
+          next();
+        })
+    }
   })
   .catch(next);
 });

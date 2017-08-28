@@ -14,4 +14,13 @@ const defineOptions = {};
 
 const Product = db.define('product', defineAttr, defineOptions);
 
+// .....class methods.....
+
+Product.names = function (id) {
+  return this.findById(id)
+    .then(product => {
+      return product.name;
+    })
+}
+
 module.exports = Product;

@@ -18,19 +18,24 @@
         <h3>Your Cart</h3>
         <div class="well">
           {% if cart %}
-            <form action="/{{ item.productId }}?_method=DELETE" method="POST">
-              {% for item in cart.lineitems %}
-                <div class="well backWhite">
+            {% for item in cart %}
+              <div class="well backWhite">
+                <form action="/orders/{{ item.productId }}/cart/{{ item.orderId }}?_method=DELETE" method="POST">
                   <div>
-                    {{ item.productId }}<span class="label label-default pull-right">{{ item.quantity }}</span>
+                      <span class="label label-default">{{ item.quantity }}</span><span class="tabtorightsm">{{ item.product.name }}</span>
                     <br clear="both" />
                   </div>
-                  <button class="btn btn-warning btn-sm" type="submit">Remove from Cart</button>
+                  <button class="btn btn-warning btn-sm margintop" type="submit">Remove from Cart</button>
                   <br clear="both" />
-                </div>
-              {% endfor %}
-              <hr class="hr" />
+                </form>
+              </div>
+            {% endfor %}
+            <hr class="hr" />
+            <form action="/orders/{{ item.productId }}/cart/{{ item.orderId }}" method="POST">
               <div><label for="address">Address:</label></div>
+              {% if error %}
+                <div class="textRed">Please enter an address<div>
+              {% endif %}
               <input name="address" type="text" class="marginbelowsm" style="width:100%" />
               <button class="btn btn-primary" type="submit">Place Order</button>
             </form>
@@ -40,7 +45,7 @@
         </div>
 
 
-        
+
       </div>
 
       <h3>Your Orders</h3>
@@ -51,7 +56,7 @@
 
             <div class="well backWhite nomarginTopBot">
               <div>
-                Product 1 name<span class="label label-default pull-right">1</span>
+                  <span class="label label-default">{{ item.quantity }}</span><span class="tabtorightsm">{{ item.product.name }}</span>
                 <br clear="both" />
               </div>
             </div>

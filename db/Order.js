@@ -15,6 +15,8 @@ const Order = db.define('order', defineAttr, defineOptions);
 
 // .....class methods.....
 
+// .....look for the cart or add.....
+
 Order.buildCart = function () {
   return this.findOne({
     where: { isCart: true }
@@ -27,6 +29,15 @@ Order.buildCart = function () {
   })
   .then(cart => {
     return cart;
+  })
+}
+
+//  .....no products left, delete the cart.....
+
+Order.removeCart = function (id) {
+  return this.findById(id)
+  .then(cart => {
+    return cart.destroy();
   })
 }
 
